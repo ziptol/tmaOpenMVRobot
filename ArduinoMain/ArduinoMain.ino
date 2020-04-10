@@ -1,5 +1,6 @@
 //ArduinoMain - By: Zack Perry - Fri April 10, 2020
 
+//define motor control pins
 #define ENA 5
 #define ENB 6
 #define IN1 7
@@ -7,12 +8,12 @@
 #define IN3 9
 #define IN4 11
 
+//define the bounds of the target
 static int error = 80;
 static int rightBound = 180 - (error/2);
 static int leftBound = 180 + (error/2);
 
 int lastVal;
-
 
 void setup() {
   // put your setup code here, to run once:
@@ -32,12 +33,12 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // wait for data on serial
   if(Serial.available()>0){
     int xcor = Serial.parseInt();
-    
+
+    //if the value is not the same as the last value & within bounds of camera FOV
     if(xcor!=lastVal && xcor>5 && xcor<315){   
-      //recieving valid coords
       if(xcor > leftBound){
         digitalWrite(LED_BUILTIN, HIGH);
         mRight();
@@ -56,6 +57,7 @@ void loop() {
   }
 }
 
+//movement commands
 void mRight(){
   digitalWrite(ENA, HIGH);  
   digitalWrite(ENB, HIGH); 

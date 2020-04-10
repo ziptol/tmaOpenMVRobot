@@ -15,12 +15,13 @@ sensor.set_auto_whitebal(False) # must be turned off for color tracking
 led = LED(2);
 led.on()
 
+#Set Exposure
 current_exposure_time_in_microseconds = sensor.get_exposure_us()
-sensor.set_auto_exposure(False, \
-    exposure_us = int(current_exposure_time_in_microseconds * EXPOSURE_TIME_SCALE))
+sensor.set_auto_exposure(False, exposure_us = int(current_exposure_time_in_microseconds * EXPOSURE_TIME_SCALE))
 
 clock = time.clock()
 
+#Open Serial port at 57000 baud
 uart = UART(3, 57600)
 
 #main loop
@@ -31,5 +32,6 @@ while(True):
         # These values are stable all the time.
         img.draw_rectangle(blob.rect())
         img.draw_cross(blob.cx(), blob.cy())
+        #Write the X coord to serial
         uart.write(str(blob.cx())+"\n")
 
