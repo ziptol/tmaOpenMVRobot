@@ -41,11 +41,11 @@ void loop() {
     if(xcor!=lastVal && xcor>5 && xcor<315){   
       if(xcor > leftBound){
         digitalWrite(LED_BUILTIN, HIGH);
-        mRight();
+        mRight(100);
       }
       else if(xcor < rightBound){
         digitalWrite(LED_BUILTIN, HIGH);
-        mLeft();
+        mLeft(100);
       }
       else{
         digitalWrite(LED_BUILTIN, LOW);
@@ -58,17 +58,17 @@ void loop() {
 }
 
 //movement commands
-void mRight(){
-  digitalWrite(ENA, HIGH);  
-  digitalWrite(ENB, HIGH); 
+void mRight(int pwm){
+  analogWrite(ENA, pwm);  
+  analogWrite(ENB, pwm); 
   digitalWrite(IN1, HIGH);      
   digitalWrite(IN2, LOW); 
   digitalWrite(IN3, HIGH);      
   digitalWrite(IN4, LOW);  
 }
-void mLeft(){
-  digitalWrite(ENA, HIGH);  
-  digitalWrite(ENB, HIGH); 
+void mLeft(int pwm){
+  digitalWrite(ENA, pwm);  
+  digitalWrite(ENB, pwm); 
   digitalWrite(IN1, LOW);      
   digitalWrite(IN2, HIGH); 
   digitalWrite(IN3, LOW);      

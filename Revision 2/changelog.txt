@@ -1,0 +1,7 @@
+4/13/20:
+Added PWM functionality
+Improved exposure settings
+
+4/14/20:
+Added PID library + tuned PID 
+
