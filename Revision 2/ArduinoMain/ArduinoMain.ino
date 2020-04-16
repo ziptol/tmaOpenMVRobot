@@ -13,7 +13,7 @@
 //create an AutoPID object
 double input, setpoint=180, output;
 double outputMin=-255, outputMax=255;
-double Kp=4, Ki=0 , Kd=30; 
+double Kp=3, Ki=0.005 , Kd=0; 
 AutoPID pid(&input,&setpoint,&output,outputMin,outputMax,Kp,Ki,Kd);
 
 void setup() {
@@ -30,8 +30,8 @@ void setup() {
   Serial.begin(57600);
 
   //set AutoPID options
-  pid.setTimeStep(20);
-  pid.setBangBang(80);
+  pid.setTimeStep(1);
+  pid.setBangBang(100);
 }
 
 void loop() {
@@ -39,7 +39,7 @@ void loop() {
     input = Serial.parseInt();
     pid.run();
     mGen(-output);
-    if (pid.atSetPoint(5)){
+    if (pid.atSetPoint(15)){
       mStop();
     }
   }
@@ -53,14 +53,14 @@ void mGen(double msp){
   int mspeed = msp;
   
   if(mspeed<0){
-    if(mspeed>-110){
+    /*if(mspeed>-110){
       mspeed = -110;
-    }
+    }*/
     mLeft(-1*mspeed);
   } else{
-    if(mspeed<110){
+    /*if(mspeed<110){
       mspeed = 110;
-    }
+    }*/
     mRight(mspeed);
   }
 }
